@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="de-DE">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Ganz schön Wild!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+    crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" media="screen" href="./res/theme/main.css" />
+</head>
+
+<body>
+
+  <header id="header">
+    <h1>{{user}}</h2>
+    <h2>Ganz sch&ouml;n Wild!</h2>
+  </header>
+
+<section id="content">
+  <is-category></is-category>
+
+</section>
+
+
+  <section id="parts">
+    <article v-for="part in parts">
+      <div :class="{ 'reh': part.isReh, 'ws': part.isWs , 'honey': part.isHoney  }">
+        <h2>{{ part.category.parent ? part.category.parent.name : ''}}</h2>
+        <h1>{{ part.category.name }}</h1>
+        <ul>
+          <li>Gewicht: {{ part.weight > part.category.priceUnit.conversionFactor ?
+            part.weight/part.category.priceUnit.conversionFactor : part.weight }}
+            {{part.weight > part.category.priceUnit.conversionFactor ? part.category.priceUnit.shortUnit :
+            part.category.priceUnit.factorUnit}}</li>
+          <li>Preis: {{ part.price }} ({{part.category.price}}
+            {{part.category.priceUnit.currency}}/{{part.category.priceUnit.shortUnit}})</li>
+          <li>Datum: {{ part.freezeDate }}</li>
+        </ul>
+        <div class="contact">
+          <a :href="part.mail" target="_new" class="mail"><i class="far fa-envelope fa-2x"></i></a>
+          <a :href="part.whatsapp" target="_new" class="whatsapp"><i class="fab fa-whatsapp fa-2x"></i></a>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <footer>
+    <p>&copy; 2018-2019 ingoschindler.de / ganzsch&ouml;nwild.de</p>
+  </footer>
+
+  <script src="./res/lib/vue.js"></script>
+  <script src="./res/lib/main.js"></script>
+  <script src="./res/lib/category.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
