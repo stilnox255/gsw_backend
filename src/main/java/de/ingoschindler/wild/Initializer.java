@@ -42,45 +42,52 @@ public class Initializer {
 		kgProEur.setCurrency("€");
 		em.persist(kgProEur);
 
-		Category h = newCategory(null, "Honig", 0.0);
-		Category h1 = newCategory(h, "Tannen-Honig", 3.5);
-		Category h2 = newCategory(h, "Frühlingstraum", 4.5);
+		Category h = newCategory(null, "Honig", 0.0, 3);
+		Category h1 = newCategory(h, "Tannen-Honig", 3.5, 2);
+		Category h2 = newCategory(h, "Frühlingstraum", 4.5, 1);
 
-		Category reh = newCategory(null, "Reh", 4.5);
-		Category r1 = newCategory(reh, "Rücken", 30.0);
-		Category r2 = newCategory(reh, "Schulter (ausgelößt)", 14.0);
-		Category r3 = newCategory(reh, "Keule (ausgelößt)", 24.0);
-		Category r4 = newCategory(reh, "Filet", 35.0);
+		Category reh = newCategory(null, "Reh", 4.5, 2);
+		Category r1 = newCategory(reh, "Rücken", 30.0, 2);
+		Category r2 = newCategory(reh, "Schulter (ausgelößt)", 14.0, 4);
+		Category r3 = newCategory(reh, "Keule (ausgelößt)", 24.0, 3);
+		Category r4 = newCategory(reh, "Filet", 35.0, 1);
 
-		Category ws = newCategory(null, "Wildschwein", 3.5);
-		Category ws1 = newCategory(ws, "Rücken", 26.5);
-		Category ws2 = newCategory(ws, "Schulter (ausgelößt)", 12.0);
-		Category ws3 = newCategory(ws, "Keule (ausgelößt)", 21.0);
-		Category ws4 = newCategory(ws, "Filet", 30.0);
+		Category ws = newCategory(null, "Wildschwein", 3.5, 1);
+		Category ws1 = newCategory(ws, "Rücken", 26.5, 2);
+		Category ws2 = newCategory(ws, "Schulter (ausgelößt)", 12.0, 4);
+		Category ws3 = newCategory(ws, "Keule (ausgelößt)", 21.0, 3);
+		Category ws4 = newCategory(ws, "Filet", 30.0, 1);
 
 		newPart(h1);
-		newPart(r1);
-		newPart(ws4);
-		newPart(r2);
-		newPart(ws3);
 		newPart(h2);
-		newPart(r4);
-		newPart(ws);
-		newPart(ws1);
 		newPart(h1);
+		newPart(h2);
+
+		newPart(r1);
+		newPart(r2);
+		newPart(r4);
 		newPart(r3);
 		newPart(r2);
-		newPart(h2);
+
+		newPart(ws);
+		newPart(ws4);
+		newPart(ws3);
+		newPart(ws1);
+		newPart(ws2);
+		newPart(ws4);
+		newPart(ws3);
+		newPart(ws1);
 		newPart(ws2);
 
 	}
 
-	private Category newCategory(Category parent, String name, Double price) {
+	private Category newCategory(Category parent, String name, Double price, Integer prio) {
 		Category category = new Category();
 		category.setName(name);
 		category.setPrice(new BigDecimal(price));
 		category.setParent(parent);
 		category.setPriceUnit(kgProEur);
+		category.setPriority(prio);
 		em.persist(category);
 
 		return category;

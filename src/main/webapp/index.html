@@ -18,15 +18,14 @@
 
   <header id="header">
     <h1>{{user}}</h2>
-    <h2>Ganz sch&ouml;n Wild!</h2>
+      <h2>Ganz sch&ouml;n Wild!</h2>
   </header>
 
-<section id="content">
-  <is-category></is-category>
+  <section id="categories">
+    <is-category v-for="category in categories" :key="category.id" :category="category"></is-category>
+  </section>
 
-</section>
-
-
+<!-- 
   <section id="parts">
     <article v-for="part in parts">
       <div :class="{ 'reh': part.isReh, 'ws': part.isWs , 'honey': part.isHoney  }">
@@ -47,10 +46,10 @@
         </div>
       </div>
     </article>
-  </section>
+  </section> -->
 
   <footer>
-    <p>&copy; 2018-2019 ingoschindler.de / ganzsch&ouml;nwild.de</p>
+    <p>&copy; 2019 ingoschindler.de / ganzsch&ouml;nwild.de</p>
   </footer>
 
   <script src="./res/lib/vue.js"></script>

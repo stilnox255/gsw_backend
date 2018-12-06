@@ -11,10 +11,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import de.ingoschindler.wild.entity.Category;
 import de.ingoschindler.wild.entity.Part;
-import de.ingoschindler.wild.entity.User;
 
-@Path("/user/{ref}")
+@Path("/users/{ref}")
 @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
 public class UserResource {
 
@@ -22,16 +22,18 @@ public class UserResource {
 	private EntityManager em;
 
 	@GET
-	public User getUser(@PathParam("ref") String ref) {
-		TypedQuery<User> query = em.createNamedQuery("User.byRef", User.class);
+	@Path("categories/")
+	public List<Category> getUsersCategories(@PathParam("ref") String ref) {
+		TypedQuery<Category> query = em.createNamedQuery("Category.usersCategories", Category.class);
+
 		query.setParameter("ref", ref);
-		User u = query.getSingleResult();
-		return u;
+
+		return query.getResultList();
 	}
 
 	@GET
 	@Path(("categories/{cid}/parts"))
-	public List<Part> getUsersParts(@PathParam("ref") String ref, @PathParam("cid") String cid) {
+	public List<Part> getUsersParts(@PathParam("ref") String ref, @PathParam("cid") Long cid) {
 
 		TypedQuery<Part> query = em.createNamedQuery("Part.usersPartsByCategory", Part.class);
 

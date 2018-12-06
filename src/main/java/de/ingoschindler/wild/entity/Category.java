@@ -20,13 +20,16 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "CATEGORIES", schema = "PUBLIC")
 @NamedQueries({
-		@NamedQuery(name = "Category.usersCategories", query = "SELECT distinct p.category.parent FROM Part p WHERE p.owner.ref = :ref ") })
+		@NamedQuery(name = "Category.usersCategories", query = "SELECT distinct p.category.parent FROM Part p WHERE p.owner.ref = :ref order by p.category.parent.priority asc ") })
 public class Category implements Serializable {
 	private static final long serialVersionUID = -1643680519898785439L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
+	@Column
+	private Integer priority;
 
 	@NotNull
 	private String name;
@@ -114,6 +117,14 @@ public class Category implements Serializable {
 
 	public void setPriceUnit(Unit priceUnit) {
 		this.priceUnit = priceUnit;
+	}
+
+	public Integer getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Integer priority) {
+		this.priority = priority;
 	}
 
 }
