@@ -27,20 +27,21 @@ public class UserPart {
 
 		this.name = c.getName();
 
-		if (p.getWeight().compareTo(pu.getConversionFactor()) > 1) {
-			w = p.getWeight().divideToIntegralValue(pu.getConversionFactor());
+		if (p.getWeight().compareTo(pu.getConversionFactor()) >= 1) {
+			w = p.getWeight().divide(pu.getConversionFactor()).setScale(2);
 			u = pu.getShortUnit();
 		} else {
-			w = p.getWeight();
+			w = p.getWeight().setScale(0);
 			u = pu.getFactorUnit();
 
 		}
-		this.weight = p.getWeight().setScale(0).toString();
+		this.weight = w.toString();
 		this.weight += u;
 
 		this.price = c.getPrice().divide(pu.getConversionFactor()).multiply(p.getWeight())
 				.setScale(2, RoundingMode.HALF_EVEN).toString();
-		this.price += pu.getCurrency() + "/" + pu.getShortUnit();
+		this.price += pu.getCurrency() + " (" + c.getPrice().setScale(2).toString() + pu.getCurrency() + "/"
+				+ pu.getShortUnit() + ")";
 
 		this.freezeDate = p.getFreezeDate();
 

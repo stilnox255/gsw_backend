@@ -14,7 +14,7 @@ import de.ingoschindler.wild.entity.Category;
 @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
 public class CategorieResource {
 
-	@PersistenceContext
+	@PersistenceContext(unitName = "wild")
 	private EntityManager em;
 
 	@GET

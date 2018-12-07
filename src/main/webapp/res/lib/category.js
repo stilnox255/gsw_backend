@@ -22,7 +22,7 @@ Vue.component('is-category', {
         <div class="category" :class="{ 'reh': category.isReh, 'ws': category.isWs , 'honey': category.isHoney  }">
             <h1>{{ category.name }} <span class="number">{{category.count}}</span> </h1>
             <div class="parts">
-                <is-part v-for="part in category.parts" :key="part.id" :part="part"></is-part>
+                <is-part v-for="part in category.parts" :key="part.id" :part="part" ></is-part>
             </div>
         </div>
         `
@@ -46,6 +46,10 @@ const cat = new Vue({
                         .then((j) => {
                             Vue.set(c, 'parts', j)
                             c.count = j.length;
+                            c.parts.forEach(part => {
+                                part.whatsapp = 'https://wa.me/4917634098326?text=' + encodeURIComponent(part.whatsapp);
+                                part.mail = 'mailto:mail@ingoschindler.de?subject=' + encodeURIComponent(part.mail)+"&body=" +encodeURIComponent(part.mail);
+                            })
                         });
 
                     c.isReh = false;

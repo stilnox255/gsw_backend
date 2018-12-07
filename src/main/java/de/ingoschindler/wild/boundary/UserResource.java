@@ -20,7 +20,7 @@ import de.ingoschindler.wild.entity.UserPart;
 @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
 public class UserResource {
 
-	@PersistenceContext
+	@PersistenceContext(unitName = "wild")
 	private EntityManager em;
 
 	@GET
