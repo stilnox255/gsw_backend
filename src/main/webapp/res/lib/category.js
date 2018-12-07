@@ -1,15 +1,11 @@
 Vue.component('is-part', {
     props: ['part'],
     template: `
-    <article class="part" :class="{ 'reh': part.isReh, 'ws': part.isWs , 'honey': part.isHoney  }">
-        <h1>{{ part.category.name }}</h1>
+    <article class="part">
+        <h1>{{ part.name }}</h1>
         <ul>
-          <li>Gewicht: {{ part.weight > part.category.priceUnit.conversionFactor ?
-            part.weight/part.category.priceUnit.conversionFactor : part.weight }}
-            {{part.weight > part.category.priceUnit.conversionFactor ? part.category.priceUnit.shortUnit :
-            part.category.priceUnit.factorUnit}}</li>
-          <li>Preis: {{ part.price }} ({{part.category.price}}
-            {{part.category.priceUnit.currency}}/{{part.category.priceUnit.shortUnit}})</li>
+          <li>Gewicht: {{ part.weight }}</li>
+          <li>Preis: {{ part.price }} </li>
           <li>Datum: {{ part.freezeDate }}</li>
         </ul>
         <div class="contact">
@@ -50,10 +46,6 @@ const cat = new Vue({
                         .then((j) => {
                             Vue.set(c, 'parts', j)
                             c.count = j.length;
-                            c.parts.forEach(part => {
-                                part.whatsapp = 'https://wa.me/4917634098326?text=' + encodeURIComponent('Hallo! ich hätte gerne "' + part.category.name + '" (xxx g)  für 12.34€. Lieben Dank!');
-                                part.mail = 'mailto:mail@ingoschindler.de?subject=' + encodeURIComponent(part.category.name) + '&body=' + encodeURIComponent(part.category.name);
-                            })
                         });
 
                     c.isReh = false;
