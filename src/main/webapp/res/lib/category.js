@@ -10,7 +10,7 @@ Vue.component('is-part', {
         </ul>
         <div class="contact">
           <a :href="part.mail" target="_new" class="mail"><i class="far fa-envelope fa-2x"></i></a>&nbsp;
-          <a :href="part.whatsapp" target="_new" class="whatsapp"><i class="fab fa-whatsapp fa-2x"></i></a>
+          <a :href="part.whatsappLink" target="_new" class="whatsapp"><i class="fab fa-whatsapp fa-2x"></i></a>
           </div>
     </article>
     `
@@ -36,19 +36,19 @@ const cat = new Vue({
     created: function () {
         const vm = this;
         let ref = new URLSearchParams(window.location.search).get('ref');
-        fetch('http://localhost:8080/wild/resources/users/' + encodeURIComponent(ref) + "/categories")
+        fetch('https://apps.ingoschindler.de:8443/wild/resources/users/' + encodeURIComponent(ref) + "/categories")
             .then((r) => r.json())
             .then((j) => {
                 vm.categories = j;
                 vm.categories.forEach(c => {
-                    fetch('http://localhost:8080/wild/resources/users/' + encodeURIComponent(ref) + "/categories/" + encodeURIComponent(c.id) + "/parts/")
+                    fetch('https://apps.ingoschindler.de:8443/wild/resources/users/' + encodeURIComponent(ref) + "/categories/" + encodeURIComponent(c.id) + "/parts/")
                         .then((r) => r.json())
                         .then((j) => {
                             Vue.set(c, 'parts', j)
                             c.count = j.length;
                             c.parts.forEach(part => {
-                                part.whatsapp = 'https://wa.me/4917634098326?text=' + encodeURIComponent(part.whatsapp);
-                                part.mail = 'mailto:mail@ingoschindler.de?subject=' + encodeURIComponent(part.mail)+"&body=" +encodeURIComponent(part.mail);
+                                part.whatsappLink = 'https://wa.me/4917634098326?text=' + encodeURIComponent(part.whatsapp);
+                                part.mail = 'mailto:mail@ingoschindler.de?subject=' + encodeURIComponent("Wild: " + part.name) + "&body=" + encodeURIComponent(part.whatsapp);
                             })
                         });
 
