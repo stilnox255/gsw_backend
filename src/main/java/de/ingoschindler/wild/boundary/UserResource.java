@@ -26,6 +26,9 @@ public class UserResource {
 	@GET
 	@Path("categories/")
 	public List<Category> getUsersCategories(@PathParam("ref") String ref) {
+
+		System.out.println("Refference: " + ref);
+
 		TypedQuery<Category> query = em.createNamedQuery("Category.usersCategories", Category.class);
 		query.setParameter("ref", ref);
 		List<Category> resultList = query.getResultList();

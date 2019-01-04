@@ -21,32 +21,11 @@
       <h2>Ganz sch&ouml;n Wild!</h2>
   </header>
 
+	<a href="members/index.xhtml">Benutzer</a>
+
   <section id="categories">
     <is-category v-for="category in categories" :key="category.id" :category="category"></is-category>
   </section>
-
-<!-- 
-  <section id="parts">
-    <article v-for="part in parts">
-      <div :class="{ 'reh': part.isReh, 'ws': part.isWs , 'honey': part.isHoney  }">
-        <h2>{{ part.category.parent ? part.category.parent.name : ''}}</h2>
-        <h1>{{ part.category.name }}</h1>
-        <ul>
-          <li>Gewicht: {{ part.weight > part.category.priceUnit.conversionFactor ?
-            part.weight/part.category.priceUnit.conversionFactor : part.weight }}
-            {{part.weight > part.category.priceUnit.conversionFactor ? part.category.priceUnit.shortUnit :
-            part.category.priceUnit.factorUnit}}</li>
-          <li>Preis: {{ part.price }} ({{part.category.price}}
-            {{part.category.priceUnit.currency}}/{{part.category.priceUnit.shortUnit}})</li>
-          <li>Datum: {{ part.freezeDate }}</li>
-        </ul>
-        <div class="contact">
-          <a :href="part.mail" target="_new" class="mail"><i class="far fa-envelope fa-2x"></i></a>
-          <a :href="part.whatsapp" target="_new" class="whatsapp"><i class="fab fa-whatsapp fa-2x"></i></a>
-        </div>
-      </div>
-    </article>
-  </section> -->
 
   <footer>
     <p>&copy; 2019 ingoschindler.de / ganzsch&ouml;nwild.de</p>

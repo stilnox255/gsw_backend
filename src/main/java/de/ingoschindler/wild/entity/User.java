@@ -9,11 +9,14 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Null;
 
 @Entity
@@ -23,16 +26,22 @@ public class User implements Serializable {
 	private static final long serialVersionUID = -2122778146143882079L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(length = 25, unique = true)
+	@NotEmpty
 	private String username;
 
 	@Email
+	@NotEmpty
 	@Column(unique = true)
 	private String email;
 
 	@Column(length = 25)
 	private String publicName;
 
-	@Column(length = 15)
+	@Column(unique = true, length = 15)
 	private String ref;
 
 	@Column(length = 50)
@@ -50,6 +59,10 @@ public class User implements Serializable {
 	@Embedded
 	@Null
 	private Location location;
+
+	public Long getId() {
+		return id;
+	}
 
 	public String getUsername() {
 		return username;

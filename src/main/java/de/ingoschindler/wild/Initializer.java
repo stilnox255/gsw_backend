@@ -1,14 +1,13 @@
 package de.ingoschindler.wild;
 
 import java.math.BigDecimal;
-import java.nio.charset.Charset;
 import java.time.LocalDate;
-import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -16,6 +15,7 @@ import de.ingoschindler.wild.entity.Category;
 import de.ingoschindler.wild.entity.Part;
 import de.ingoschindler.wild.entity.Unit;
 import de.ingoschindler.wild.entity.User;
+import de.ingoschindler.wild.members.CustomerManager;
 
 @ApplicationScoped
 @Singleton
@@ -28,6 +28,9 @@ public class Initializer {
 	private User u;
 
 	private Unit kgProEur;
+
+	@Inject
+	private CustomerManager cm;
 
 	@PostConstruct
 	private void init() {
@@ -121,20 +124,11 @@ public class Initializer {
 
 		u.setUsername("test");
 
-		u.setRef("3sna4svg5dwtzhf");
+		u.setRef(cm.generateRefLink());
 
 		u.setPublicName("Ingo Schindler");
 		em.persist(u);
 		return u;
 	}
 
-	private String generateRefLink() {
-		byte[] array = new byte[15]; // length is bounded by 7
-		new Random().nextBytes(array);
-		String generatedString = new String(array, Charset.forName("UTF-8"));
-
-		System.out.println(generatedString);
-
-		return generatedString;
-	}
 }
