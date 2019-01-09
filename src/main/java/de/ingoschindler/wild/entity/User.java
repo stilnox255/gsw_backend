@@ -22,6 +22,7 @@ import javax.validation.constraints.Null;
 @Entity
 @Table(name = "USERS", schema = "PUBLIC")
 @NamedQuery(query = "SELECT u from User u where u.ref = :ref", name = "User.byRef")
+@NamedQuery(query = "SELECT u from User u where u.username = :username", name = "User.byUsername")
 public class User implements Serializable {
 	private static final long serialVersionUID = -2122778146143882079L;
 

@@ -37,13 +37,13 @@ const cat = new Vue({
         const vm = this;
         let ref = new URLSearchParams(window.location.search).get('ref');
 //        fetch('https://apps.ingoschindler.de:8443/wild/resources/users/' + encodeURIComponent(ref) + "/categories")
-        fetch('http://localhost:8080/wild/resources/users/' + encodeURIComponent(ref) + "/categories")
+        fetch('http://192.168.5.21:8080/wild/resources/users/' + encodeURIComponent(ref) + "/categories")
             .then((r) => r.json())
             .then((j) => {
                 vm.categories = j;
                 vm.categories.forEach(c => {
 //                    fetch('https://apps.ingoschindler.de:8443/wild/resources/users/' + encodeURIComponent(ref) + "/categories/" + encodeURIComponent(c.id) + "/parts/")
-                    fetch('http://localhost:8080/wild/resources/users/' + encodeURIComponent(ref) + "/categories/" + encodeURIComponent(c.id) + "/parts/")
+                    fetch('http://192.168.5.21:8080/wild/resources/users/' + encodeURIComponent(ref) + "/categories/" + encodeURIComponent(c.id) + "/parts/")
                         .then((r) => r.json())
                         .then((j) => {
                             Vue.set(c, 'parts', j)

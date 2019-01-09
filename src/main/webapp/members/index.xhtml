@@ -1,84 +1,96 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<h:head>
+		<h:outputStylesheet>
+            h3 {
+                text-align: center;
+            }
+        </h:outputStylesheet>
+	</h:head>
+	<h:body>
 
-<h:head>
-</h:head>
+		<p>Logged-in as #{request.userPrincipal.name}</p>
 
-<h:body>
+		<h:form>
+			<p:commandButton value="Logout" action="#{logoutBacking.submit}" />
+		</h:form>
 
+		<h:form id="customers">
+			<p:growl id="growl" sticky="true" />
+			<p:dataTable id="customerList" var="customer"
+				value="#{customersBacking.customers}">
+				<p:column headerText="Id">
+					<h:outputText value="#{customer.id}" />
+				</p:column>
+				<p:column headerText="Username">
+					<p:inputText id="firstNameInput" value="#{customer.username}" />
+				</p:column>
+				<p:column headerText="Passwort">
+					<h:outputText id="lastNameInput" value="#{customer.password}" />
+				</p:column>
+				<p:column headerText="Email">
+					<p:inputText id="emailInput" value="#{customer.email}" />
+				</p:column>
+				<p:column headerText="Realname">
+					<h:outputText value="#{customer.realName}" />
+				</p:column>
+				<p:column headerText="Öffentlicher Name">
+					<h:outputText value="#{customer.publicName}" />
+				</p:column>
+				<p:column headerText="Reflink">
+					<h:outputLink value="/wild/index.html?ref=#{customer.ref}">
+						<h:outputText value="#{customer.ref}" />
+					</h:outputLink>
+				</p:column>
 
-	<h:form id="customers">
-		<p:growl id="growl" sticky="true" />
-		<p:dataTable id="customerList" var="customer"
-			value="#{customersBacking.customers}">
-			<p:column headerText="Id">
-				<h:outputText value="#{customer.id}" />
-			</p:column>
-			<p:column headerText="Username">
-				<p:inputText id="firstNameInput" value="#{customer.username}" />
-			</p:column>
-			<p:column headerText="Passwort">
-				<h:outputText id="lastNameInput" value="#{customer.password}" />
-			</p:column>
-			<p:column headerText="Email">
-				<p:inputText id="emailInput" value="#{customer.email}" />
-			</p:column>
-			<p:column headerText="Realname">
-				<h:outputText value="#{customer.realName}"/>
-			</p:column>
-			<p:column headerText="Öffentlicher Name">
-				<h:outputText value="#{customer.publicName}"/>
-			</p:column>
-			<p:column headerText="Reflink">
-			<h:outputLink value="/wild/index.html?ref=#{customer.ref}"><h:outputText value="#{customer.ref}"/></h:outputLink>
-			</p:column>
-			
-			<p:column>
-				<p:commandButton update="customerList" value="Delete"
-					icon="ui-icon-closethick"
-					action="#{customersBacking.delete(customer)}"
-					styleClass="ui-priority-primary">
-				</p:commandButton>
-			</p:column>
-		</p:dataTable>
-		<br />
-		<p:commandButton style="float: right" id="save" value="Save"
-			tyleClass="ui-priority-primary" action="#{customersBacking.update}"
-			icon="ui-icon-disk" update="growl">
-			<f:ajax execute="@form" render="@form" />
-		</p:commandButton>
-	</h:form>
-
-	<h:form id="add">
-		<h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;">
-			<p:outputLabel for="username" value="Username" />
-			<p:inputText id="username"
-				value="#{customersBacking.customer.username}" />
-			<p:message for="username" />
-			
-			<p:outputLabel for="password" value="Passwort" />
-			<p:password id="password"
-				value="#{customersBacking.customer.password}">
-			</p:password>
-			<p:message for="password" />
-			
-			<p:outputLabel for="email" value="E-Mail" />
-			<p:inputText id="email" value="#{customersBacking.customer.email}"/>
-			<p:message for="email" />
-			
-			<p:outputLabel for="realname" value="Realname" />
-			<p:inputText id="realname" value="#{customersBacking.customer.realName}"/>
-			<p:message for="realname" />
-
-			
-			<p:commandButton update="@form :customers:customerList" value="Add"
-				action="#{customersBacking.add}">
+				<p:column>
+					<p:commandButton update="customerList" value="Delete"
+						icon="ui-icon-closethick"
+						action="#{customersBacking.delete(customer)}"
+						styleClass="ui-priority-primary">
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			<br />
+			<p:commandButton style="float: right" id="save" value="Save"
+				tyleClass="ui-priority-primary" action="#{customersBacking.update}"
+				icon="ui-icon-disk" update="growl">
+				<f:ajax execute="@form" render="@form" />
 			</p:commandButton>
-		</h:panelGrid>
-	</h:form>
+		</h:form>
+
+		<h:form id="add">
+			<h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;">
+				<p:outputLabel for="username" value="Username" />
+				<p:inputText id="username"
+					value="#{customersBacking.customer.username}" />
+				<p:message for="username" />
+
+				<p:outputLabel for="password" value="Passwort" />
+				<p:password id="password"
+					value="#{customersBacking.customer.password}">
+				</p:password>
+				<p:message for="password" />
+
+				<p:outputLabel for="email" value="E-Mail" />
+				<p:inputText id="email" value="#{customersBacking.customer.email}" />
+				<p:message for="email" />
+
+				<p:outputLabel for="realname" value="Realname" />
+				<p:inputText id="realname"
+					value="#{customersBacking.customer.realName}" />
+				<p:message for="realname" />
 
 
-</h:body>
+				<p:commandButton update="@form :customers:customerList" value="Add"
+					action="#{customersBacking.add}">
+				</p:commandButton>
+			</h:panelGrid>
+		</h:form>
+	</h:body>
+</f:view>
 </html>
