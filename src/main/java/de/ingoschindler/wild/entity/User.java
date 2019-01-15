@@ -12,6 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -49,7 +52,7 @@ public class User implements Serializable {
 	private String realName;
 
 	@Convert(converter = PasswordConverter.class)
-	@Column(length = 64)
+	@Column(length = 255)
 	@JsonbTransient
 	private String password;
 
@@ -60,6 +63,19 @@ public class User implements Serializable {
 	@Embedded
 	@Null
 	private Location location;
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "USER_GROUPS", joinColumns = { @JoinColumn(name = "GROUP_ID") }, inverseJoinColumns = {
+			@JoinColumn(name = "USERS_ID") })
+	private List<Group> groups;
+
+	public List<Group> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<Group> groups) {
+		this.groups = groups;
+	}
 
 	public Long getId() {
 		return id;

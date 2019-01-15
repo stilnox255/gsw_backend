@@ -11,34 +11,43 @@ import javax.inject.Named;
 import javax.security.enterprise.AuthenticationStatus;
 import javax.security.enterprise.SecurityContext;
 import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
+import javax.security.enterprise.credential.Credential;
+import javax.security.enterprise.credential.Password;
 import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Named
 @RequestScoped
 public class LoginBacking {
 
-	@NotEmpty
-	@Size(min = 4, message = "Password must have at least 8 characters")
-	private String password;
-
-	@NotEmpty
-	private String username;
-
 	@Inject
 	private SecurityContext securityContext;
 
-	@Inject
-	private ExternalContext externalContext;
+	@NotNull
+	@Size(min = 3, max = 15, message = "Username must be between 3 and 15 characters")
+	private String username;
+
+	@NotNull
+	@Size(min = 3, max = 50, message = "Password must be between 5 and 50 characters")
+	private String password;
 
 	@Inject
 	private FacesContext facesContext;
 
-	public void submit() throws IOException {
-		switch (continueAuthentication()) {
+	@Inject
+	private ExternalContext externalContext;
+
+	public void login() throws IOException {
+
+		Credential credential = new UsernamePasswordCredential(username, new Password(password));
+
+		AuthenticationStatus status = securityContext.authenticate(getRequest(facesContext), getResponse(facesContext),
+				AuthenticationParameters.withParams().credential(credential));
+
+		switch (status) {
 		case SEND_CONTINUE:
 			facesContext.responseComplete();
 			break;
@@ -51,21 +60,15 @@ public class LoginBacking {
 			break;
 		case NOT_DONE:
 		}
+
 	}
 
-	private AuthenticationStatus continueAuthentication() {
-		return securityContext.authenticate((HttpServletRequest) externalContext.getRequest(),
-				(HttpServletResponse) externalContext.getResponse(),
-				AuthenticationParameters.withParams().credential(new UsernamePasswordCredential(username, password)));
-	}
-	// getters & setters
-
-	public String getPassword() {
-		return password;
+	private HttpServletResponse getResponse(FacesContext context) {
+		return (HttpServletResponse) externalContext.getResponse();
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	private HttpServletRequest getRequest(FacesContext context) {
+		return (HttpServletRequest) externalContext.getRequest();
 	}
 
 	public String getUsername() {
@@ -74,6 +77,14 @@ public class LoginBacking {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

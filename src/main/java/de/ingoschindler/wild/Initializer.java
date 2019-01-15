@@ -2,6 +2,7 @@ package de.ingoschindler.wild;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Collections;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -12,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import de.ingoschindler.wild.entity.Category;
+import de.ingoschindler.wild.entity.Group;
 import de.ingoschindler.wild.entity.Part;
 import de.ingoschindler.wild.entity.Unit;
 import de.ingoschindler.wild.entity.User;
@@ -35,7 +37,11 @@ public class Initializer {
 	@PostConstruct
 	private void init() {
 
-		u = this.createUser();
+		Group g = new Group();
+		g.setGroupName("USER");
+		em.persist(g);
+
+		u = this.createUser(g);
 
 		kgProEur = new Unit();
 		kgProEur.setConversionFactor(new BigDecimal("1000"));
@@ -115,7 +121,7 @@ public class Initializer {
 		em.persist(keule);
 	}
 
-	private User createUser() {
+	private User createUser(Group g) {
 		User u = new User();
 
 		u.setPassword("test");
@@ -127,6 +133,7 @@ public class Initializer {
 		u.setRef(cm.generateRefLink());
 
 		u.setPublicName("Ingo Schindler");
+		u.setGroups(Collections.singletonList(g));
 		em.persist(u);
 		return u;
 	}

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.security.RolesAllowed;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -14,6 +15,7 @@ import de.ingoschindler.wild.entity.User;
 
 @Named
 @ViewScoped
+@RolesAllowed({ "USERS" })
 public class CustomersBacking implements Serializable {
 	private static final long serialVersionUID = -3501023646103118488L;
 
