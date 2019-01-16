@@ -21,13 +21,16 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Null;
+import javax.ws.rs.Path;
 
 @Entity
 @Table(name = "USERS", schema = "PUBLIC")
-@NamedQuery(query = "SELECT u from User u where u.ref = :ref", name = "User.byRef")
+@NamedQuery(query = "SELECT u from User u where u.ref = :ref", name = User.USER_BY_REF)
 @NamedQuery(query = "SELECT u from User u where u.username = :username", name = "User.byUsername")
 public class User implements Serializable {
 	private static final long serialVersionUID = -2122778146143882079L;
+
+	public static final String USER_BY_REF = "User.byRef";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,6 +70,7 @@ public class User implements Serializable {
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "USER_GROUPS", joinColumns = { @JoinColumn(name = "GROUP_ID") }, inverseJoinColumns = {
 			@JoinColumn(name = "USERS_ID") })
+	@JsonbTransient
 	private List<Group> groups;
 
 	public List<Group> getGroups() {
@@ -89,6 +93,7 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
+	@Path("/email")
 	public String getEmail() {
 		return email;
 	}
@@ -129,6 +134,7 @@ public class User implements Serializable {
 		this.location = location;
 	}
 
+	@Path("/parts")
 	public List<Part> getParts() {
 		return parts;
 	}

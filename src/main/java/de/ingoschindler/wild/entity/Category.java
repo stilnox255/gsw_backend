@@ -16,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.ws.rs.Path;
 
 @Entity
 @Table(name = "CATEGORIES", schema = "PUBLIC")
@@ -38,6 +39,7 @@ public class Category implements Serializable {
 	private String note;
 
 	@ManyToOne
+	@JsonbTransient
 	private Category parent;
 
 	@OneToMany(mappedBy = "parent")
@@ -63,6 +65,7 @@ public class Category implements Serializable {
 		this.id = id;
 	}
 
+	@Path("/parts")
 	public List<Part> getParts() {
 		return parts;
 	}
