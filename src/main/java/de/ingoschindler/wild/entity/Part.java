@@ -20,10 +20,16 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "PARTS", schema = "PUBLIC")
-@NamedQueries({ @NamedQuery(name = "Part.usersPartsByCategory", //
-		query = "SELECT p FROM Part p WHERE P.owner.ref = :ref and p.category.id = :cid or p.category.parent.id = :cid order by 	P.freezeDate asc") })
+@NamedQueries({ @NamedQuery(name = Part.BY_CATEGORY, //
+		query = "SELECT p FROM Part p WHERE P.owner.ref = :ref and p.category.id = :cid or p.category.parent.id = :cid order by P.freezeDate asc"),
+		@NamedQuery(name = Part.BY_USERNAME, //
+				query = "SELECT p FROM Part p WHERE P.owner.username = :username order by P.freezeDate asc"), })
 public class Part implements Serializable {
 	private static final long serialVersionUID = 1773339296815097191L;
+
+	public static final String BY_CATEGORY = "Part.usersPartsByCategory";
+
+	public static final String BY_USERNAME = "Part.usersPartsByUsername";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

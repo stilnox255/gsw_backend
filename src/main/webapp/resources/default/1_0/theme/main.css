@@ -1,0 +1,160 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background: url("#{resource['default:theme/bg.png']}");
+	background-attachment: fixed;
+	max-width: 960px;
+	margin: 0 auto !important;
+}
+
+label {
+	margin-bottom: .1rem !important;
+}
+
+.ui-widget .ui-widget {
+	margin-bottom: .5rem;
+}
+
+.ui-inputfield {
+	background: #cacda3;
+	color: black; 
+}
+
+header, footer, article, section, hgroup, nav, figure {
+	display: block;
+}
+
+header {
+	position: relative;
+	background-color: #2a351a;
+	background-image: url("#{resource['default:theme/header.jpg']}");
+	background-position-y: center;
+	color: #bc9e79;
+	padding: 0.5em 1em;
+}
+
+header nav {
+	position: absolute;
+	font-size: 1.5em;
+	top: 0.5em;
+	right: 0.5em;
+}
+
+header nav form {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}
+
+header nav a {
+	color: #e8cdb0;
+	display: inline-block;
+	width: 2em;
+	text-align: center;
+}
+
+header nav a:hover {
+	color: #d2997a;
+}
+
+header h1 {
+	color: #b18c60;
+}
+
+header h2 {
+	color: #dfaf74;
+}
+
+
+#breadcrumb
+{
+	margin-top: .5em;
+}
+
+._50 {
+	width: 46%;
+	display: inline;
+	float: left;
+	margin-left: 2%;
+	margin-right: 2%
+}
+
+article::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: .80;
+	z-index: -1;
+	background-color: #BBE1B5;
+}
+
+#categories .category>h1 {
+	background-color: #7e3b10;
+	margin: 0;
+	padding: 0 0em 0.2em 0.5em
+}
+
+#categories .category>h1>.number {
+	right: -1em;
+	font-size: 0.5em
+}
+
+#categories .parts {
+	position: relative;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	grid-gap: 0.2em;
+}
+
+#categories article {
+	position: relative;
+	margin: 0.2em;
+}
+
+#categories article h2 {
+	color: #bc9e79;
+	position: absolute;
+	font-size: 1em;
+	top: 0.2em;
+	right: 0.2em;
+}
+
+#maincontent {
+	background: rgb(221, 225, 194);
+	margin: 0.5em 0;
+	padding: 0.5em
+}
+
+#maincontent
+ h1 {
+	width: 100%;
+	padding: 0.5em;
+	font-size: 1.5em;
+	color: #e9e6dd;
+	background-color: #3a6607;
+}
+
+/* Footer styling: */
+footer {
+	background: url("#{resource['default:theme/header.jpg']}");
+	background-color: #2a351a;
+	color: #e9e6dd;
+	text-align: right;
+	font-size: 0.825em;
+	position: sticky;
+	bottom: 0;
+	width: 100%;
+}
+
+footer a {
+	color: #e8cdb0;
+}
+
+footer a:hover {
+	color: #d2997a;
+}

@@ -1,4 +1,4 @@
-package de.ingoschindler.wild;
+package de.ingoschindler.wild.security;
 
 import javax.annotation.security.DeclareRoles;
 import javax.enterprise.context.ApplicationScoped;

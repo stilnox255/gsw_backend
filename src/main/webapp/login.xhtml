@@ -1,37 +1,36 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-	<h:head>
-		<h:outputStylesheet>
-            h3 {
-                text-align: center;
-            }
-        </h:outputStylesheet>
-	</h:head>
-	<h:body>
-		<p:outputPanel>
-			<div class="ui-g">
-				<div class="ui-g-4" />
-				<div class="ui-g-4">
-					<h3>Login</h3>
-					<h:form id="login" >
-						<p:messages id="messages" globalOnly="true" />
-						<h:panelGrid columns="3">
-							<p:outputLabel for="username" value="Benutzername" />
-							<p:inputText id="username" value="#{loginBacking.username}" />
-							<p:message for="username" />
-							<p:outputLabel for="password" value="Password" />
-							<p:inputText type="password" id="password"
-								value="#{loginBacking.password}" />
-							<p:message for="password" />
-							 <p:commandButton id="submit" ajax="false" update="@form" 
-                                 value="Login" actionListener="#{loginBacking.login}"/>
-						</h:panelGrid>
-					</h:form>
-				</div>
-			</div>
-		</p:outputPanel>
-	</h:body>
+<h:head>
+
+</h:head>
+<h:body>
+
+	<ui:composition template="/WEB-INF/template/BasicTemplate.xhtml">
+		<ui:define name="title">Login</ui:define>
+		<ui:define name="content">
+			<p:outputPanel style="width: fit-content;margin: auto;">
+				<h:form id="login">
+					<p:messages id="messages" globalOnly="true" />
+					<h:panelGrid columns="1">
+
+						<p:outputLabel for="username" value="Benutzername" />
+						<p:inputText id="username" value="#{loginBacking.username}" />
+						<p:message for="username" />
+						<p:outputLabel for="password" value="Password" />
+						<p:inputText type="password" id="password"
+							value="#{loginBacking.password}" />
+						<p:message for="password" />
+						<p:commandButton id="submit" ajax="false" update="@form"
+							value="Login" actionListener="#{loginBacking.login}" />
+					</h:panelGrid>
+				</h:form>
+			</p:outputPanel>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
 </html>
