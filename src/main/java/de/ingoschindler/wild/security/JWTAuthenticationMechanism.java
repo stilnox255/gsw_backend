@@ -93,7 +93,7 @@ public class JWTAuthenticationMechanism implements HttpAuthenticationMechanism {
 		String password = null;
 		String authheader = extractAuthentication(context);
 		if (authheader != null) {
-			String[] auth = extractAuthentication(context).split(":");
+			String[] auth = authheader.split(":");
 			name = auth[0];
 			password = auth[1];
 		}

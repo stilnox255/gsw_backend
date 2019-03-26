@@ -39,6 +39,8 @@ package de.ingoschindler.wild.security;
 
 import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -59,16 +61,28 @@ public class AuthController {
 
 	private static final Logger LOGGER = Logger.getLogger(AuthController.class.getName());
 
+	private static final String BEARER = "Bearer ";
+
+	private static final String BASIC = "Basic ";
+
+	private static final String AUTHORIZATION_HEADER = "Authorization";
+
+	@Inject
+	private TokenProvider tokenProvider;
+
 	@Inject
 	private SecurityContext securityContext;
 
 	@GET
 	@Path("login")
 	public Response loginTest() {
+
+		String jwt = tokenProvider.createToken(securityContext.getCallerPrincipal().getName(),
+				new HashSet<String>(Arrays.asList("USER")), false);
+
 		LOGGER.log(Level.INFO, "login");
 		if (securityContext.getCallerPrincipal() != null) {
-			JsonObject result = Json.createObjectBuilder().add("user", securityContext.getCallerPrincipal().getName())
-					.build();
+			JsonObject result = Json.createObjectBuilder().add("token", jwt).build();
 			return Response.ok(result).build();
 		}
 		return Response.status(UNAUTHORIZED).build();
