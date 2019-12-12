@@ -3,10 +3,12 @@ package de.ingoschindler.wild.boundary;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -17,15 +19,14 @@ import de.ingoschindler.wild.entity.UserPart;
 @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
 public class CategorieResource {
 
-	private Long id;
+	@PathParam("ref")
 	private String ref;
-	private EntityManager em;
 
-	public CategorieResource(EntityManager em, String ref, Long id) {
-		this.em = em;
-		this.ref = ref;
-		this.id = id;
-	}
+	@PathParam("id")
+	private Long id;
+
+	@Inject
+	private EntityManager em;
 
 	@GET
 	@Path("/parts")

@@ -2,6 +2,7 @@ package de.ingoschindler.wild.boundary;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -20,6 +21,9 @@ public class UserResource {
 
 	@PersistenceContext(unitName = "wild")
 	private EntityManager em;
+
+	@Inject
+	CategorieResource cr;
 
 	@GET
 	public User gerUser(@PathParam("ref") String ref) {
@@ -44,7 +48,7 @@ public class UserResource {
 	@Path("/categories/{id}")
 	public CategorieResource getCategory(@PathParam("ref") String ref, @PathParam("id") Long id) {
 
-		return new CategorieResource(em, ref, id);
+		return cr;
 
 	}
 
