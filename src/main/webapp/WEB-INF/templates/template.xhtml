@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                template="/admin.xhtml">
+
+    <ui:define name="head">
+        <title>Ganz Schön Wild - Jägerbereich</title>
+        <meta name="theme-color" content="#444"/>
+<!--        <h:outputStylesheet library="css" name="starter.css"/>-->
+    </ui:define>
+
+    <ui:define name="logo-lg">
+        Ganz Schön Wild!
+    </ui:define>
+
+    <ui:define name="logo-mini">
+        GSW
+    </ui:define>
+
+    <ui:define name="menu">
+        <ul class="sidebar-menu">
+            <li>
+                <p:link href="index.xhtml" onclick="clearBreadCrumbs()">
+                    <i class="fa fa-home"></i>
+                    <span>Home</span>
+                </p:link>
+            </li>
+            <li class="header">
+                General
+            </li>
+            <li>
+                <p:link href="freeze.xhtml">
+                    <i class="fa fa-snowflake-o"></i>
+                    <span>Einfrieren</span>
+                </p:link>
+            </li>
+            <li>
+                <p:link href="profile.xhtml">
+                    <i class="fa fa-user"></i>
+                    <span><Profil></Profil></span>
+                </p:link>
+            </li>
+        </ul>
+    </ui:define>
+
+    <ui:define name="footer">
+        <a target="_blank"
+           href="https://ingoschindler.de/">
+            Copyright (C) 2019 ingoschindler.de
+        </a>
+
+        <div class="pull-right hidden-xs" style="color: gray">
+            <i>1.0.0</i>
+        </div>
+    </ui:define>
+
+</ui:composition>

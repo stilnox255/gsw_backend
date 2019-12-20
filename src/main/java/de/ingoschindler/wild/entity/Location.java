@@ -1,10 +1,9 @@
 package de.ingoschindler.wild.entity;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 /******************************************************************************
  * Compilation: javac Location.java Execution: java Location
@@ -18,28 +17,28 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class Location implements Serializable {
-	private static final long serialVersionUID = -4868085980882684433L;
+    private static final long serialVersionUID = -4868085980882684433L;
 
-	@Column(precision = 8, scale = 4)
-	private BigDecimal longitude;
+    @Column(precision = 8, scale = 4)
+    private BigDecimal longitude;
 
-	@Column(precision = 8, scale = 4)
-	private BigDecimal latitude;
+    @Column(precision = 8, scale = 4)
+    private BigDecimal latitude;
 
-	public BigDecimal getLongitude() {
-		return longitude;
-	}
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
 
-	public void setLongitude(BigDecimal longitude) {
-		this.longitude = longitude;
-	}
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
+    }
 
-	public BigDecimal getLatitude() {
-		return latitude;
-	}
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
 
-	public void setLatitude(BigDecimal latitude) {
-		this.latitude = latitude;
-	}
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
 
 }

@@ -1,7 +1,8 @@
 package de.ingoschindler.wild.parts;
 
-import java.io.Serializable;
-import java.util.List;
+import de.ingoschindler.wild.entity.Category;
+import de.ingoschindler.wild.entity.Part;
+import de.ingoschindler.wild.entity.User;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.security.RolesAllowed;
@@ -10,38 +11,77 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.security.enterprise.SecurityContext;
-
-import de.ingoschindler.wild.entity.Part;
+import javax.transaction.Transactional;
+import java.io.Serializable;
+import java.util.List;
 
 @Named
 @ViewScoped
-@RolesAllowed({ "USERS" })
+@RolesAllowed({"USERS"})
+@Transactional
 public class PartsBacking implements Serializable {
-	private static final long serialVersionUID = 8820758723159191651L;
+    private static final long serialVersionUID = 8820758723159191651L;
 
-	@PersistenceContext(unitName = "wild")
-	private EntityManager em;
+    @PersistenceContext(unitName = "wild")
+    private EntityManager em;
 
-	@Inject
-	private SecurityContext securityContext;
+    @Inject
+    private SecurityContext securityContext;
 
-	private List<Part> parts;
+    private Part newPart;
 
-	@PostConstruct
-	public void init() {
-		String username = securityContext.getCallerPrincipal().getName();
+    private User user;
 
-		TypedQuery<Part> query = em.createNamedQuery(Part.BY_USERNAME, Part.class);
-		query.setParameter("username", username);
+    private List<Part> parts;
 
-		parts = query.getResultList();
+    private List<Category> categories;
 
-	}
+    @PostConstruct
+    public void init() {
+        String username = securityContext.getCallerPrincipal().getName();
 
-	public List<Part> getParts() {
-		return parts;
-	}
+        parts = em.createNamedQuery(Part.BY_USERNAME, Part.class)
+                .setParameter("username", username)
+                .getResultList();
 
+        user = em.createNamedQuery(User.BY_USERNAME, User.class)
+                .setParameter("username", username)
+                .getSingleResult();
+
+        categories = em.createNamedQuery(Category.FIND_ALL, Category.class).getResultList();
+
+        initPart();
+    }
+
+    private void initPart() {
+        newPart = new Part();
+        newPart.setOwner(user);
+    }
+
+    public List<Part> getParts() {
+        return parts;
+    }
+
+
+    public void savePart() {
+
+
+        parts.add(newPart);
+        em.flush();
+
+        initPart();
+    }
+
+    public Part getNewPart() {
+        return newPart;
+    }
+
+    public void setNewPart(Part newPart) {
+        this.newPart = newPart;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
 }

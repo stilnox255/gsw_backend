@@ -1,42 +1,42 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+				xmlns:h="http://xmlns.jcp.org/jsf/html"
+                template="/WEB-INF/templates/template.xhtml">
 
-</h:head>
-<h:body>
+    <ui:define name="title">
+        Jägerbereich
+    </ui:define>
 
-	<ui:composition template="/WEB-INF/template/MemberTemplate.xhtml">
-		<ui:define name="title">Jägerbereich</ui:define>
-		<ui:define name="content">
-			<h:form id="form">
-				<p:dataTable var="part" value="#{partsBacking.parts}" >
-					<p:column headerText="Teil" sortBy="#{part.category.name}">
-						<h:outputText value="#{part.category.name}" />
-					</p:column>
+    <ui:define name="description">
+        Jägerbereich
+    </ui:define>
 
-					<p:column headerText="Art" sortBy="#{part.category.parent.name}">
-						<h:outputText value="#{part.category.parent.name}" />
-					</p:column>
+    <ui:define name="body">
+        <h:form id="form">
+            <p:dataTable var="part" value="#{partsBacking.parts}">
+                <p:column headerText="Teil" sortBy="#{part.category.name}">
+                    <h:outputText value="#{part.category.name}"/>
+                </p:column>
 
-					<p:column headerText="Preis (€)"  sortBy="#{part.price}">
-						<h:outputText value="#{part.price}" />
-					</p:column>
+                <p:column headerText="Art" sortBy="#{part.category.parent.name}">
+                    <h:outputText value="#{part.category.parent.name}"/>
+                </p:column>
 
-					<p:column headerText="Gewicht (g)" sortBy="#{part.weight}">
-						<h:outputText value="#{part.weight}" />
-					</p:column>
-					
-					<p:column headerText="Eingefrohren" sortBy="#{part.freezeDate}">
-						<h:outputText value="#{part.freezeDate}" />
-					</p:column>
-				</p:dataTable>
-			</h:form>
-		</ui:define>
-	</ui:composition>
+                <p:column headerText="Preis (€)" sortBy="#{part.price}">
+                    <h:outputText value="#{part.price}"/>
+                </p:column>
 
-</h:body>
-</html>
+                <p:column headerText="Gewicht (g)" sortBy="#{part.weight}">
+                    <h:outputText value="#{part.weight}"/>
+                </p:column>
+
+                <p:column headerText="Eingefrohren" sortBy="#{part.freezeDate}">
+                    <h:outputText value="#{part.freezeDate}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
