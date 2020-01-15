@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 import javax.security.enterprise.SecurityContext;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Named
@@ -33,9 +34,15 @@ public class PartsBacking implements Serializable {
 
     private User user;
 
+    private Category selectedCategory;
+
     private List<Part> parts;
 
     private List<Category> categories;
+
+    private List<Category> subcategories;
+
+    private Category selectedMainCategory;
 
     @PostConstruct
     public void init() {
@@ -54,6 +61,14 @@ public class PartsBacking implements Serializable {
         initPart();
     }
 
+    public void loadSubCategories() {
+
+
+        subcategories = em.createNamedQuery(Category.FIND_SUBCATEGORIES, Category.class)
+                .setParameter("parent",  selectedMainCategory.getId())
+                .getResultList();
+    }
+
     private void initPart() {
         newPart = new Part();
         newPart.setOwner(user);
@@ -65,11 +80,11 @@ public class PartsBacking implements Serializable {
 
 
     public void savePart() {
-
-
-        parts.add(newPart);
+        System.out.println("PartsBacking.savePart");
+        Category cat = em.merge(selectedCategory);
+        newPart.setCategory(cat);
+        em.merge(newPart);
         em.flush();
-
         initPart();
     }
 
@@ -83,5 +98,25 @@ public class PartsBacking implements Serializable {
 
     public List<Category> getCategories() {
         return categories;
+    }
+
+    public Category getSelectedCategory() {
+        return selectedCategory;
+    }
+
+    public void setSelectedCategory(Category selectedCategory) {
+        this.selectedCategory = selectedCategory;
+    }
+
+    public Category getSelectedMainCategory() {
+        return selectedMainCategory;
+    }
+
+    public void setSelectedMainCategory(Category selectedMainCategory) {
+        this.selectedMainCategory = selectedMainCategory;
+    }
+
+    public List<Category> getSubcategories() {
+        return subcategories;
     }
 }

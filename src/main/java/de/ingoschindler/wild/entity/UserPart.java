@@ -2,7 +2,7 @@ package de.ingoschindler.wild.entity;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
+import java.util.Date;
 
 public class UserPart {
 
@@ -15,7 +15,7 @@ public class UserPart {
     private boolean isReh;
     private boolean isWs;
     private boolean isHoney;
-    private LocalDate freezeDate;
+    private Date freezeDate;
 
     public UserPart(Part p) {
 
@@ -28,19 +28,19 @@ public class UserPart {
         this.name = c.getName();
 
         if (p.getWeight().compareTo(pu.getConversionFactor()) >= 1) {
-            w = p.getWeight().divide(pu.getConversionFactor()).setScale(2);
+            w = p.getWeight().divide(pu.getConversionFactor(), RoundingMode.HALF_UP).setScale(2, RoundingMode.HALF_UP);
             u = pu.getShortUnit();
         } else {
-            w = p.getWeight().setScale(0);
+            w = p.getWeight().setScale(0, RoundingMode.HALF_UP);
             u = pu.getFactorUnit();
 
         }
         this.weight = w.toString();
         this.weight += u;
 
-        this.price = c.getPrice().divide(pu.getConversionFactor()).multiply(p.getWeight())
+        this.price = c.getPrice().divide(pu.getConversionFactor(), RoundingMode.HALF_UP).multiply(p.getWeight())
                 .setScale(2, RoundingMode.HALF_EVEN).toString();
-        this.price += pu.getCurrency() + " (" + c.getPrice().setScale(2).toString() + pu.getCurrency() + "/"
+        this.price += pu.getCurrency() + " (" + c.getPrice().setScale(2, RoundingMode.HALF_UP).toString() + pu.getCurrency() + "/"
                 + pu.getShortUnit() + ")";
 
         this.freezeDate = p.getFreezeDate();
@@ -61,16 +61,12 @@ public class UserPart {
                 break;
         }
 
-        StringBuilder sb = new StringBuilder("Hallo! ich h�tte gerne ");
-
-        sb.append(name);
-        sb.append(" (");
-        sb.append(this.weight);
-        sb.append(") f�r ");
-        sb.append(this.price);
-        sb.append(". Lieben Dank!");
-
-        this.whatsapp = sb.toString();
+        this.whatsapp = "Hallo! ich hätte gerne " + name +
+                " (" +
+                this.weight +
+                ") für " +
+                this.price +
+                ". Lieben Dank!";
 
     }
 
@@ -146,11 +142,11 @@ public class UserPart {
         this.isHoney = isHoney;
     }
 
-    public LocalDate getFreezeDate() {
+    public Date getFreezeDate() {
         return freezeDate;
     }
 
-    public void setFreezeDate(LocalDate freezeDate) {
+    public void setFreezeDate(Date freezeDate) {
         this.freezeDate = freezeDate;
     }
 

@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "PARTS", schema = "PUBLIC")
@@ -26,7 +27,7 @@ public class Part implements Serializable {
     private String note;
 
     @NotNull
-    private LocalDate freezeDate;
+    private Date freezeDate;
 
     @NotNull
     private BigDecimal weight;
@@ -49,8 +50,8 @@ public class Part implements Serializable {
     }
 
     public BigDecimal getPrice() {
-        return category.getPrice().divide(category.getPriceUnit().getConversionFactor()).multiply(this.weight)
-                .setScale(2, RoundingMode.HALF_EVEN);
+        return category.getPrice().divide(category.getPriceUnit().getConversionFactor(), RoundingMode.HALF_UP).multiply(this.weight)
+                .setScale(2, RoundingMode.HALF_UP);
     }
 
     public String getNote() {
@@ -61,11 +62,11 @@ public class Part implements Serializable {
         this.note = note;
     }
 
-    public LocalDate getFreezeDate() {
+    public Date getFreezeDate() {
         return freezeDate;
     }
 
-    public void setFreezeDate(LocalDate freezeDate) {
+    public void setFreezeDate(Date freezeDate) {
         this.freezeDate = freezeDate;
     }
 

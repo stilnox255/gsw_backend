@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Collections;
 
 @ApplicationScoped
@@ -110,7 +110,7 @@ public class Initializer {
     private void newPart(Category c, int weight) {
         Part keule = new Part();
         keule.setCategory(c);
-        keule.setFreezeDate(LocalDate.now());
+        keule.setFreezeDate(Calendar.getInstance().getTime());
         keule.setOwner(u);
         keule.setWeight(new BigDecimal(weight));
         em.persist(keule);

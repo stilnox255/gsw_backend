@@ -12,11 +12,13 @@ import java.util.List;
 @Table(name = "CATEGORIES", schema = "PUBLIC")
 @NamedQueries({
         @NamedQuery(name = Category.FIND_ALL, query = "SELECT  c FROM Category  c WHERE  c.parent is null "),
+        @NamedQuery(name = Category.FIND_SUBCATEGORIES, query = "SELECT  c FROM Category  c WHERE  c.parent.id = :parent "),
         @NamedQuery(name = "Category.usersCategories", query = "SELECT distinct p.category.parent FROM Part p WHERE p.owner.ref = :ref order by p.category.parent.priority asc ")})
 public class Category implements Serializable {
     private static final long serialVersionUID = -1643680519898785439L;
 
     public static final String FIND_ALL = "Category.FIND_ALL";
+    public static final String FIND_SUBCATEGORIES = "Category.FIND_SUBCATEGORIES";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -123,4 +125,19 @@ public class Category implements Serializable {
         this.priority = priority;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Category category = (Category) o;
+
+        return id.equals(category.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

@@ -17,14 +17,50 @@
 
         <h:form>
             <div class="ui-material">
-                <p:selectOneMenu id="lazy" value="#{partsBacking.newPart.category}" dynamic="true">
-                    <f:selectItems value="#{partsBacking.categories}" var="c" itemLabel="#{c.name}"/>
-                </p:selectOneMenu>
-                <p:outputLabel for="lazy" value="Art:"/>
+                <p:inputText id="note" value="#{partsBacking.newPart.note}"/>
+                <p:outputLabel for="note" value="Notiz:"/>
+                <p:message for="note"/>
             </div>
 
             <div class="ui-material">
-                <p:commandButton action="#{partsBacking.savePart}"  value="Speichern" update="@form" ></p:commandButton>
+                <p:inputNumber id="weight" value="#{partsBacking.newPart.weight}" placeholder="in Gramm" symbol="g" symbolPosition="suffix"/>
+                <p:outputLabel for="weight" value="Gewicht:"/>
+                <p:message for="weight"/>
+            </div>
+
+            <div class="ui-material">
+                <p:calendar id="material-calendar" showOn="both" placeholder="Datum"
+                            required="true" value="#{partsBacking.newPart.freezeDate}">
+<!--                    <p:ajax event="dateSelect" global="false" onstart="adminMaterial()"/>-->
+                </p:calendar>
+                <p:outputLabel for="material-calendar" value="Material calendar"/>
+                <p:message for="material-calendar"/>
+            </div>
+
+
+            <div class="ui-material">
+                <p:selectOneMenu id="maincategory" value="#{partsBacking.selectedMainCategory}" converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemValue="#{null}" itemLabel="Bitte Wählen"/>
+                    <f:selectItems value="#{partsBacking.categories}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
+                    <f:ajax listener="#{partsBacking.loadSubCategories}" render="category" />
+                </p:selectOneMenu>
+                <p:outputLabel for="maincategory" value="Art:"/>
+                <p:message for="maincategory"/>
+            </div>
+
+            <div class="ui-material">
+                <p:selectOneMenu id="category" value="#{partsBacking.selectedCategory}" converter="omnifaces.SelectItemsConverter">
+                    <f:selectItem itemValue="#{null}" itemLabel="Bitte Wählen"/>
+                    <f:selectItems value="#{partsBacking.subcategories}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
+                </p:selectOneMenu>
+                <p:outputLabel for="category" value="Art:"/>
+                <p:message for="category"/>
+            </div>
+
+            <div class="ui-material">
+                <p:commandButton actionListener="#{partsBacking.savePart}"  value="Speichern">
+                    <f:ajax execute="@form" render="@form" />
+                </p:commandButton>
             </div>
         </h:form>
 
