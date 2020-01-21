@@ -13,7 +13,8 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = Category.FIND_ALL, query = "SELECT  c FROM Category  c WHERE  c.parent is null "),
         @NamedQuery(name = Category.FIND_SUBCATEGORIES, query = "SELECT  c FROM Category  c WHERE  c.parent.id = :parent "),
-        @NamedQuery(name = "Category.usersCategories", query = "SELECT distinct p.category.parent FROM Part p WHERE p.owner.ref = :ref order by p.category.parent.priority asc ")})
+        @NamedQuery(name = "Category.usersCategories", query = "SELECT distinct p.category.parent FROM Part p WHERE p.owner.ref = :ref order by p.category.parent.priority asc ")
+})
 public class Category implements Serializable {
     private static final long serialVersionUID = -1643680519898785439L;
 

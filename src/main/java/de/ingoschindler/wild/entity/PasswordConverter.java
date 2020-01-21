@@ -15,7 +15,6 @@ public class PasswordConverter implements AttributeConverter<String, String> {
 
     @Override
     public String convertToDatabaseColumn(String input) {
-
         Map<String, String> parameters = new HashMap<>();
         parameters.put("Pbkdf2PasswordHash.Iterations", "3072");
         parameters.put("Pbkdf2PasswordHash.Algorithm", "PBKDF2WithHmacSHA512");

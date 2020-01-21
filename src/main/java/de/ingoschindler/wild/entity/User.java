@@ -55,8 +55,10 @@ public class User implements Serializable {
     private Location location;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "USER_GROUPS", joinColumns = {@JoinColumn(name = "GROUP_ID")}, inverseJoinColumns = {
-            @JoinColumn(name = "USERS_ID")})
+    @JoinTable(name = "USER_GROUPS", joinColumns = {
+            @JoinColumn(name = "GROUP_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "USERS_ID")}
+    )
     @JsonbTransient
     private List<Group> groups;
 

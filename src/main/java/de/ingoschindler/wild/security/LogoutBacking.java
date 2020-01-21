@@ -14,7 +14,7 @@ public class LogoutBacking {
     @Inject
     AdminSession adminSession;
 
-    public String submit() {
+    public String logout() {
         adminSession.setIsLoggedIn(false);
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "/login.xhtml?faces-redirect=true";

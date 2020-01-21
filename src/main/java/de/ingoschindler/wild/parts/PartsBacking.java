@@ -14,7 +14,6 @@ import javax.persistence.PersistenceContext;
 import javax.security.enterprise.SecurityContext;
 import javax.transaction.Transactional;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Named
@@ -43,10 +42,11 @@ public class PartsBacking implements Serializable {
     private List<Category> subcategories;
 
     private Category selectedMainCategory;
+    private String username;
 
     @PostConstruct
     public void init() {
-        String username = securityContext.getCallerPrincipal().getName();
+        username = securityContext.getCallerPrincipal().getName();
 
         parts = em.createNamedQuery(Part.BY_USERNAME, Part.class)
                 .setParameter("username", username)
@@ -65,7 +65,7 @@ public class PartsBacking implements Serializable {
 
 
         subcategories = em.createNamedQuery(Category.FIND_SUBCATEGORIES, Category.class)
-                .setParameter("parent",  selectedMainCategory.getId())
+                .setParameter("parent", selectedMainCategory.getId())
                 .getResultList();
     }
 
@@ -78,6 +78,17 @@ public class PartsBacking implements Serializable {
         return parts;
     }
 
+
+    public void delete(Part tbd) {
+        tbd = em.merge(tbd);
+        em.remove(tbd);
+        em.flush();
+
+        parts = em.createNamedQuery(Part.BY_USERNAME, Part.class)
+                .setParameter("username", username)
+                .getResultList();
+
+    }
 
     public void savePart() {
         System.out.println("PartsBacking.savePart");

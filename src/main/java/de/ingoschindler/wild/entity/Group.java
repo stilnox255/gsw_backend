@@ -9,15 +9,18 @@ import java.util.List;
 @Table(name = "GROUPS", schema = "PUBLIC")
 public class Group implements Serializable {
     private static final long serialVersionUID = 7594341184641779522L;
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name = "USER_GROUPS")
-    List<User> users;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotEmpty
     @Column(unique = true)
     private String groupName;
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "USER_GROUPS")
+    List<User> users;
 
     public Long getId() {
         return id;

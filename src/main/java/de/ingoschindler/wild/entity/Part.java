@@ -6,15 +6,14 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 @Table(name = "PARTS", schema = "PUBLIC")
-@NamedQueries({@NamedQuery(name = Part.BY_CATEGORY, //
-        query = "SELECT p FROM Part p WHERE P.owner.ref = :ref and p.category.id = :cid or p.category.parent.id = :cid order by P.freezeDate asc"),
-        @NamedQuery(name = Part.BY_USERNAME, //
-                query = "SELECT p FROM Part p WHERE P.owner.username = :username order by P.freezeDate asc"),})
+@NamedQueries({
+        @NamedQuery(name = Part.BY_CATEGORY, query = "SELECT p FROM Part p WHERE P.owner.ref = :ref and (p.category.id = :cid or p.category.parent.id = :cid) order by P.freezeDate asc"),
+        @NamedQuery(name = Part.BY_USERNAME, query = "SELECT p FROM Part p WHERE P.owner.username = :username order by P.freezeDate asc")
+})
 public class Part implements Serializable {
     public static final String BY_CATEGORY = "Part.usersPartsByCategory";
     public static final String BY_USERNAME = "Part.usersPartsByUsername";
@@ -33,7 +32,7 @@ public class Part implements Serializable {
     private BigDecimal weight;
 
     @NotNull
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JsonbTransient
     private User owner;
 

@@ -7,6 +7,7 @@ import javax.faces.annotation.FacesConfig.Version;
 import javax.inject.Named;
 import javax.security.enterprise.authentication.mechanism.http.BasicAuthenticationMechanismDefinition;
 import javax.security.enterprise.authentication.mechanism.http.CustomFormAuthenticationMechanismDefinition;
+import javax.security.enterprise.authentication.mechanism.http.FormAuthenticationMechanismDefinition;
 import javax.security.enterprise.authentication.mechanism.http.LoginToContinue;
 import javax.security.enterprise.identitystore.DatabaseIdentityStoreDefinition;
 import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
@@ -21,7 +22,7 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
         groupsQuery = "select groupname from GROUPS g join USER_GROUPS ug on g.id = ug.group_id join users u on ug.users_id = u.id where u.username = ?", //
         hashAlgorithm = Pbkdf2PasswordHash.class, //
         priorityExpression = "#{100}", //
-        hashAlgorithmParameters = {"Pbkdf2PasswordHash.Iterations=3072", "${applicationConfig.dyna}"} // just for test
+        hashAlgorithmParameters = {"${applicationConfig.dyna}"} // just for test
 )
 @ApplicationScoped
 @DeclareRoles({"${applicationConfig.roles}"})
@@ -29,7 +30,8 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 public class ApplicationConfig {
 
     public String[] getDyna() {
-        return new String[]{"Pbkdf2PasswordHash.Algorithm=PBKDF2WithHmacSHA512",
+        return new String[]{"Pbkdf2PasswordHash.Iterations=3072",
+                "Pbkdf2PasswordHash.Algorithm=PBKDF2WithHmacSHA512",
                 "Pbkdf2PasswordHash.SaltSizeBytes=64"};
     }
 
